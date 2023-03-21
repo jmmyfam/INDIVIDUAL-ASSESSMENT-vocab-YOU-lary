@@ -8,3 +8,37 @@ body {
   text-align: center;
   margin-top: 100px;
 }
+
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  margin: 50px;
+  border-radius: 10px;
+}
+
+
+.card-header {
+  display: flex;
+  color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-decoration: underline;
+  justify-content: flex-start;
+  
+}
+
+.card-language {
+  color: gray;
+  font-weight: 10;
+  font-size: small;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#add-book-btn {
+  background-color: rgba(255, 255, 255, 0.993);
+  color: black;
+  border-radius: 500px;
+  
+}

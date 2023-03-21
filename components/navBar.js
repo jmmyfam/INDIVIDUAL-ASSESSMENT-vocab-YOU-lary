@@ -12,7 +12,7 @@ const navBar = () => {
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item active">
               <a class="nav-link" href="#" id="all-vocabs">
-                All Vocab <span class="sr-only">(current)</span>
+                All <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
