@@ -1,14 +1,12 @@
 import client from '../utils/client';
-// API CALLS FOR BOOKS
 
 const endpoint = client.databaseURL;
 
-// TODO: GET VOCAB
-const getVocab = (uid) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/books.json?orderBy="uid"&equalTo="${uid}"`, {
+const getVocabs = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/vocabs.json?orderBy="uid"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
   })
     .then((response) => response.json())
@@ -22,32 +20,8 @@ const getVocab = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const deleteVocab = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/books/${firebaseKey}.json`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => resolve(data))
-    .catch(reject);
-});
-
-const getSingleVocab = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/books/${firebaseKey}.json`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    }, // you technically do not need the options object for GET requests, but using it here for consistency
-  })
-    .then((response) => response.json())
-    .then((data) => resolve(data)) // will resolve a single object
-    .catch(reject);
-});
-
-const createVocab = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/books.json`, {
+const createVocabs = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/vocabs.json`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -59,8 +33,8 @@ const createVocab = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const updateVocab = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/books/${payload.firebaseKey}.json`, {
+const updateVocabs = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/vocabs/${payload.firebaseKey}.json`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -72,8 +46,32 @@ const updateVocab = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const pinnedVocab = (uid) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/books.json?orderBy="uid"&equalTo="${uid}"`, {
+const deleteVocabs = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/vocabs/${firebaseKey}.json`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+const getSingleVocabs = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/vocabs/${firebaseKey}.json`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    }, // you technically do not need the options object for GET requests, but using it here for consistency
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data)) // will resolve a single object
+    .catch(reject);
+});
+
+const getHTML = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/vocabs.json?orderBy="uid"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -81,17 +79,49 @@ const pinnedVocab = (uid) => new Promise((resolve, reject) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      const onSale = Object.values(data).filter((item) => item.sale);
-      resolve(onSale);
+      const html = Object.values(data).filter((obj) => obj.language === 'HTML');
+      resolve(html);
+    })
+    .catch(reject);
+});
+
+const getCSS = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/vocabs.json?orderBy="uid"&equalTo="${uid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const css = Object.values(data).filter((obj) => obj.language === 'CSS');
+      resolve(css);
+    })
+    .catch(reject);
+});
+
+const getJS = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/vocabs.json?orderBy="uid"&equalTo="${uid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const js = Object.values(data).filter((obj) => obj.language === 'JavaScript');
+      resolve(js);
     })
     .catch(reject);
 });
 
 export {
-  getVocab,
-  createVocab,
-  pinnedVocab,
-  deleteVocab,
-  getSingleVocab,
-  updateVocab
+  getVocabs,
+  createVocabs,
+  updateVocabs,
+  deleteVocabs,
+  getSingleVocabs,
+  getHTML,
+  getCSS,
+  getJS
 };
