@@ -1,38 +1,33 @@
-import renderToDOM from '../../utils/renderToDOM';
 import clearDom from '../../utils/clearDOM';
+import renderToDOM from '../../utils/renderToDOM';
 
-const createVocabForm = (uid, obj = {}) => {
+const createVocab = (obj = {}) => {
   clearDom();
-  document.querySelector('#filterButtonContainer').innerHTML = '';
-  const formTitle =
-    Object.keys(obj).length === 0 ? '<h1>Add Term Form</h1>' : '<h1>Update Term Form</h1>';
-  renderToDOM('#filterButtonContainer', formTitle);
-
-  const domString = ` 
-     <form id="${obj.firebaseKey ? `updateVocabItem--${obj.firebaseKey}` : 'submit-card-form'}" class="mb-4">
-      <div class="form-group mb-3">
-        <!-- <label for="title">Title</label> -->
-        <input type="text" class="form-control" id="title" placeholder="Title" value="${obj.term || ''}" required>
+  const domString = `
+    <form id="${obj.firebaseKey ? `update-vocab--${obj.firebaseKey}` : 'submit-vocab'}" class="mb-4">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" aria-describedby="bookTitle" placeholder="Enter A Vocabulary" value="${obj.title || ''}" required>
       </div>
-      <div class="form-group mb-3">
-        <!-- <label for="definition">Definition</label> -->
-        <input type="text" class="form-control" id="definition" placeholder="Definition" value="${obj.description || ''}" required>
+      <div class="form-group">
+        <label for="description">Definition</label>
+        <textarea class="form-control" placeholder="Description" id="description" style="height: 100px">${obj.description || ''}</textarea>
       </div>
-      <div class="form-group ">
-        <select class="form-select" id="languageSelect" aria-label="Language select">
-          <option selected>${obj.language || 'Select Language'}</option>
-          <option value="HTML">HTML</option>
-          <option value="CSS">CSS</option>
-          <option value="Javascript">Javascript</option>
-        </select required>
-          
-        </div>
-        
-        <button type="submit" class="btn btn-secondary mt-3">Submit</button>
-      </form>
-    `;
+      <div class="form-group" id="select-language">
+      <label for="category">Language</label>
+        <select class="form-control" placeholder="Select Category" id="language" name="vocabCategory" value="${obj.language || ''}" required>
+        <option value="">Select a Language</option>
+          <option value="HTML" ${obj.language === 'HTML' ? 'selected' : ''}>HTML</option>
+          <option value="CSS" ${obj.language === 'CSS' ? 'selected' : ''}>CSS</option>
+          <option value="JavaScript" ${obj.language === 'JavaScript' ? 'selected' : ''}>JavaScript</option>
+        </select>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Submit
+      </button>
+    </form>`;
 
   renderToDOM('#form-container', domString);
 };
 
-export default createVocabForm;
+export default createVocab;
